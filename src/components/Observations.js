@@ -45,10 +45,11 @@ const Observations = (props) => {
 
   return (
     <div className="observations">
+      <h1>Home</h1>
       <button className="button" onClick={handleAddNewObservation}>Add new Observation</button>
       <form onChange={handleFiltering} className="observations__filter">
         <p>Sorting:</p>
-        <select>
+        <select aria-label="Select sorting">
           <option value="dateDesc">Descending by date</option>
           <option value="dateAsc">Ascending by date</option>
           <option value="rarityDesc">Descending by rarity</option>
@@ -72,10 +73,17 @@ const Observations = (props) => {
                 }
               </li>
               <li className="observations__listItem">{new Date(bird.date).toString()}</li>
-              <li className="observations__listItem">{bird.notes.substring(0,30)}</li>
-              <Link to={`/observation/${bird.id}`}>
+              {bird.notes &&
+                <li className="observations__listItem">{bird.notes.substring(0,30)}</li>
+              }
+              {bird.picture &&
+              <li className="observations__listItem">
+                <img alt={bird.alt || 'no alt given'} src={`data:image/jpg;image/png;base64, ${btoa(bird.picture)}`} />
+              </li>
+              }
+              <li className="observations__listItem"><Link to={`/observation/${bird.id}`}>
                 <button className="observations__button button">Open</button>
-              </Link>
+              </Link></li>
             </ul>
           );
         }

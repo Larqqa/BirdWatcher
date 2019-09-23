@@ -22,11 +22,11 @@ const Observation = (props) => {
   return (
     <div className="observation">
       {!bird ?
-        <p>No bird by that id was found</p>
+        <h1>No bird by that id was found</h1>
         :
         <>
+          <h1>{bird.name}</h1>
           <ul>
-            <li className="observation__listItem">{bird.name}</li>
             <li className="observation__listItem">
               {bird.loc.longitude ?
                 `latitude: ${parseFloat(bird.loc.latitude).toFixed(4)} | longitude:${parseFloat(bird.loc.longitude).toFixed(4)} | accuracy: ${bird.loc.accuracy}m`
@@ -35,7 +35,16 @@ const Observation = (props) => {
               }
             </li>
             <li className="observation__listItem">{new Date(bird.date).toString()}</li>
-            <li className="observation__listItem">{bird.notes}</li>
+            {bird.notes ?
+              <li className="observation__listItem">{bird.notes}</li>
+              :
+              <li className="observation_listItem">No notes</li>
+            }
+            {bird.picture &&
+            <li>
+              <img alt={bird.alt || 'no alt given'} src={`data:image/jpg;image/png;base64, ${btoa(bird.picture)}`} />
+            </li>
+            }
           </ul>
           <button className="button" onClick={handleUpdate}>Update entry</button>
           <button className="button" onClick={handleDelete}>Delete entry</button>

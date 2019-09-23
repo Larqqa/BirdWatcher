@@ -1,8 +1,6 @@
 {
   "short_name": "BirdWatcher",
   "name": "Application for bird watchers to record sightings",
-  "description": "Application for saving bird watching observations. This application also works offline!",
-  "keywords": "HTML,CSS,SCSS,React,WebPack,JavaScript",
   "icons": [
     {
       "src": "./faviconx192.png",

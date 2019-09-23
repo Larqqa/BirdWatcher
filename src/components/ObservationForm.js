@@ -8,6 +8,8 @@ const ObservationForm = (props) => {
   const [ rarity, setRarity ] = useState('');
   const [ notes, setNotes ] = useState('');
   const [ location, setLocation ] = useState('No location given');
+  const [ picture, setPicture ] = useState();
+  const [ alt, setAlt ] = useState();
 
   const bird = props.bird;
 
@@ -19,8 +21,8 @@ const ObservationForm = (props) => {
       setRarity(bird.rarity);
       setNotes(bird.notes);
       setLocation(bird.loc);
-    } else {
-      setGeoLocation();
+      setPicture(bird.picture);
+      setAlt(bird.alt);
     }
   }, [ props.bird ]);
 
@@ -35,6 +37,9 @@ const ObservationForm = (props) => {
       break;
     case 'notes':
       setNotes(e.target.value);
+      break;
+    case 'alt':
+      setAlt(e.target.value);
       break;
     default:
       break;
@@ -68,7 +73,30 @@ const ObservationForm = (props) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  // Get picture as binary string
+  const toBlob = (bird, callback) => {
+
+    // Get picture from input
+    const file = document.getElementById('picture').files[0];
+
+    // If no picture, return rest of the bird object
+    if (!file) return callback(bird);
+
+    var reader = new FileReader();
+    
+    reader.onload = () => {
+
+      // Add binary to object
+      bird.picture = reader.result;
+      callback(bird);
+    };
+    
+    reader.readAsBinaryString(file);
+
+    return callback();
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // If bird is found, do update
@@ -78,12 +106,19 @@ const ObservationForm = (props) => {
         name: e.target.name.value,
         notes: e.target.notes.value,
         rarity: e.target.rarity.value,
-        loc: location
+        loc: location,
+        picture: picture,
+        alt: alt
       };
-      
-      // When updating entries, go to the entry after update
-      props.updateSingleBird(updateBird);
-      return props.history.push(`/observation/${bird.id}`);
+
+      return toBlob(updateBird, (res) => {
+        if (!res) return console.log('There was an error');
+
+        // When updating entries, go to the entry after update
+        props.updateSingleBird(res);
+        return props.history.push(`/observation/${bird.id}`);
+      });
+
     }
 
     // Else create new bird
@@ -91,12 +126,18 @@ const ObservationForm = (props) => {
       name: e.target.name.value,
       notes: e.target.notes.value,
       rarity: e.target.rarity.value,
-      loc: location
+      loc: location,
+      alt: alt
     };
 
-    // When creating new entries, go to home after saving entry
-    props.addBird(newBird);
-    return props.history.push('/');
+    toBlob(newBird, (res) => {
+      if (!res)  return console.log('There was an error');
+
+      // When creating new entries, go to home after saving entry
+      props.addBird(res);
+      return props.history.push('/');
+    });
+    
   };
 
   // On cancel go to home page
@@ -113,27 +154,42 @@ const ObservationForm = (props) => {
   const handleLocationUpdate = (e) => {
     e.preventDefault();
 
-    if (window.confirm('Are you sure you want to update this observations location?')){
+    // Confirm that user wants to overwrite old location
+    if (bird && window.confirm('Are you sure you want to update this observations location?')){
+      setGeoLocation();
+    } else {
+
+      // When creating new entries, get location on button press
       setGeoLocation();
     }
   };
 
   return (
     <div className="observationForm">
+      <h1>{!bird ? 'Make new entry' : `update ${bird.name}`}</h1>
       <form onSubmit={handleSubmit}>
-        <input name="name" value={name} placeholder="name" onChange={handleChange} required/>
-        <select name="rarity" value={rarity} onChange={handleChange}>
+        <input type="text" name="name" aria-label="Add name of the bird" value={name} placeholder="name" onChange={handleChange} required/>
+        <select name="rarity" aria-label="Select rarity" value={rarity} onChange={handleChange}>
           <option value="common">Common</option>
           <option value="rare">Rare</option>
           <option value="extremely rare">Extremely Rare</option>
         </select>
-        <textarea name="notes" value={notes} placeholder="notes" onChange={handleChange}/>
+        <textarea type="text" name="notes" aria-label="Add notes" value={notes} placeholder="notes" onChange={handleChange}/>
         {location.longitude ?
           <p>latitude: {parseFloat(location.latitude).toFixed(4)} | longitude:{parseFloat(location.longitude).toFixed(4)} | accuracy: {location.accuracy}m</p>
           :
           <p>{location}</p>
         }
-        <button className="button" onClick={handleLocationUpdate}>Update location</button>
+        <button className="button" onClick={handleLocationUpdate}>
+          {!bird ?
+            'Add location'
+            :
+            'Update location'
+          }
+        </button>
+        <p>{!bird || !bird.picture ? 'Add picture' : 'Replace picture'}</p>
+        <input type="file" name="picture" aria-label="Add a picture" id="picture" capture />
+        <input type="text" name="alt" aria-label="Add an alternative tag for the picture" value={alt} placeholder="image alt text" onChange={handleChange} />
         <button className="button">Save</button>
       </form>
       <button className="button" onClick={handleCancel}>Cancel</button>

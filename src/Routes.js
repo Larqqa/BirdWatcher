@@ -1,9 +1,10 @@
 import React from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Switch, Redirect, Link, Route } from 'react-router-dom';
 import About from './components/About';
 import Observations from './components/Observations';
 import Observation from './components/Observation';
 import ObservationForm from './components/ObservationForm';
+import NotFound from './components/NotFound';
 
 // Routes are defined in this array for automated rendering
 const routes = [
@@ -41,6 +42,12 @@ const routes = [
     exact: true,
     component: ObservationForm,
     link: false
+  },
+  {
+    name: '404 not found',
+    path: '/404',
+    component: NotFound,
+    link: false
   }
 ];
 
@@ -63,14 +70,17 @@ export const NavLinks = () => {
 // Define Routing
 const Routes = () => {
   return (
-    routes.map((route, i) =>
-      <Route
-        key={i}
-        exact={route.exact}
-        path={route.path}
-        component={route.component}
-      />
-    )
+    <Switch>
+      {routes.map((route, i) =>
+        <Route
+          key={i}
+          exact={route.exact}
+          path={route.path}
+          component={route.component}
+        />
+      )}
+      <Redirect to="/404" />
+    </Switch>
   );
 };
 

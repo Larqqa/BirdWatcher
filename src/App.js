@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { Switch } from 'react-router-dom';
 import Routes, { NavLinks } from './Routes';
 import { initializeBirds, addBird } from './reducers/birdReducer';
 import dummy from './helpers/dummy';
@@ -28,9 +27,7 @@ const App = (props) => {
         <NavLinks />
       </header>
 
-      <Switch>
-        <Routes />
-      </Switch>
+      <Routes />
     </>
   );
 };
