@@ -1,0 +1,41 @@
+{
+  "name": "birdwatcher",
+  "version": "0.0.1",
+  "description": "App for sharing bird watching observations",
+  "license": "ISC",
+  "scripts": {
+    "start": "webpack --mode=development && webpack-dev-server --mode=development --open",
+    "serve": "npm run build && serve -l 3000 -s build",
+    "build": "rm -rf build && webpack --mode=production"
+  },
+  "dependencies": {
+    "dexie": "^2.0.4",
+    "normalize.css": "^8.0.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-redux": "^7.1.0",
+    "react-router-dom": "^5.0.1",
+    "redux": "^4.0.4",
+    "redux-thunk": "^2.3.0",
+    "serve": "^11.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
+    "@babel/polyfill": "^7.6.0",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
+    "copy-webpack-plugin": "^5.0.4",
+    "css-loader": "^3.1.0",
+    "eslint": "^6.1.0",
+    "eslint-plugin-react": "^7.14.3",
+    "html-loader": "^0.5.5",
+    "node-sass": "^4.12.0",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.38.0",
+    "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.7.2"
+  }
+}
