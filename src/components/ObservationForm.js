@@ -8,8 +8,8 @@ const ObservationForm = (props) => {
   const [ rarity, setRarity ] = useState('');
   const [ notes, setNotes ] = useState('');
   const [ location, setLocation ] = useState('No location given');
+  const [ alt, setAlt ] = useState('');
   const [ picture, setPicture ] = useState();
-  const [ alt, setAlt ] = useState();
 
   const bird = props.bird;
 
@@ -55,6 +55,7 @@ const ObservationForm = (props) => {
     };
   
     const error = (err) => {
+      alert(err.message);
       console.warn(`ERROR(${err.code}): ${err.message}`);
     };
   
@@ -112,7 +113,6 @@ const ObservationForm = (props) => {
       };
 
       return toBlob(updateBird, (res) => {
-        if (!res) return console.log('There was an error');
 
         // When updating entries, go to the entry after update
         props.updateSingleBird(res);
@@ -131,7 +131,6 @@ const ObservationForm = (props) => {
     };
 
     toBlob(newBird, (res) => {
-      if (!res)  return console.log('There was an error');
 
       // When creating new entries, go to home after saving entry
       props.addBird(res);
@@ -141,7 +140,9 @@ const ObservationForm = (props) => {
   };
 
   // On cancel go to home page
-  const handleCancel = () => {
+  const handleCancel = (e) => {
+    e.preventDefault();
+
     if (window.confirm('Are you sure you want to cancel this bird?')) {
 
       // If updating a single bird, return to birds entry
@@ -165,22 +166,28 @@ const ObservationForm = (props) => {
   };
 
   return (
-    <div className="observationForm">
+    <div className="main observationForm">
       <h1>{!bird ? 'Make new entry' : `update ${bird.name}`}</h1>
       <form onSubmit={handleSubmit}>
-        <input type="text" name="name" aria-label="Add name of the bird" value={name} placeholder="name" onChange={handleChange} required/>
+        <input type="text" name="name" aria-label="Add name of the bird" value={name} placeholder="Name" onChange={handleChange} required/>
         <select name="rarity" aria-label="Select rarity" value={rarity} onChange={handleChange}>
           <option value="common">Common</option>
           <option value="rare">Rare</option>
           <option value="extremely rare">Extremely Rare</option>
         </select>
-        <textarea type="text" name="notes" aria-label="Add notes" value={notes} placeholder="notes" onChange={handleChange}/>
+        <textarea type="text" name="notes" aria-label="Add notes" rows="5" value={notes} placeholder="Notes" onChange={handleChange}/>
         {location.longitude ?
-          <p>latitude: {parseFloat(location.latitude).toFixed(4)} | longitude:{parseFloat(location.longitude).toFixed(4)} | accuracy: {location.accuracy}m</p>
+          <p>
+            {`latitude: ${parseFloat(location.latitude).toFixed(4)}`}
+            <br/>
+            {`longitude: ${parseFloat(location.longitude).toFixed(4)}`}
+            <br/>
+            {`accuracy: ${location.accuracy}m`}
+          </p>
           :
           <p>{location}</p>
         }
-        <button className="button" onClick={handleLocationUpdate}>
+        <button className="button--space" onClick={handleLocationUpdate}>
           {!bird ?
             'Add location'
             :
@@ -191,8 +198,8 @@ const ObservationForm = (props) => {
         <input type="file" name="picture" aria-label="Add a picture" id="picture" capture />
         <input type="text" name="alt" aria-label="Add an alternative tag for the picture" value={alt} placeholder="image alt text" onChange={handleChange} />
         <button className="button">Save</button>
+        <button className="button" onClick={handleCancel}>Cancel</button>
       </form>
-      <button className="button" onClick={handleCancel}>Cancel</button>
     </div>
   );
 };

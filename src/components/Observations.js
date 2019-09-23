@@ -44,9 +44,9 @@ const Observations = (props) => {
   };
 
   return (
-    <div className="observations">
-      <h1>Home</h1>
-      <button className="button" onClick={handleAddNewObservation}>Add new Observation</button>
+    <div className="main observations">
+      <h1>BirdWatcher</h1>
+      <button className="button--full" onClick={handleAddNewObservation}>Add new Observation</button>
       <form onChange={handleFiltering} className="observations__filter">
         <p>Sorting:</p>
         <select aria-label="Select sorting">
@@ -62,29 +62,49 @@ const Observations = (props) => {
       {birds && birds.map(
         bird => {
           return(
-            <ul key={bird.id} className="observations__list">
-              <li className="observations__listItem--title">{bird.name}</li>
-              <li className="observations__listItem">{bird.rarity}</li>
-              <li className="observations__listItem">
-                {bird.loc.longitude ?
-                  `latitude: ${parseFloat(bird.loc.latitude).toFixed(4)} | longitude:${parseFloat(bird.loc.longitude).toFixed(4)} | accuracy: ${bird.loc.accuracy}m`
-                  :
-                  `${bird.loc}`
+            <React.Fragment key={bird.id}>
+              <hr />
+              <ul className="observations__list">
+                <li className="observations__listItem--title">
+                  <p>{bird.name}</p>
+                </li>
+                <li className="observations__listItem">
+                  <p>Rarity:</p>
+                  {bird.rarity}
+                </li>
+                <li className="observations__listItem">
+                  {bird.loc.longitude ?
+                    <>
+                      <p>Location:</p>
+                      {`latitude: ${parseFloat(bird.loc.latitude).toFixed(4)}`}
+                      <br/>
+                      {`longitude: ${parseFloat(bird.loc.longitude).toFixed(4)}`}
+                      <br/>
+                      {`accuracy: ${bird.loc.accuracy}m`}
+                    </>
+                    :
+                    `${bird.loc}`
+                  }
+                </li>
+                <li className="observations__listItem">
+                  <p>Date:</p>
+                  {new Date(bird.date).toLocaleString('en-GB', { timeZone: 'Europe/Helsinki' })}</li>
+                {bird.notes &&
+                  <li className="observations__listItem">
+                    <p>Notes:</p>
+                    {bird.notes.substring(0,30)}
+                  </li>
                 }
-              </li>
-              <li className="observations__listItem">{new Date(bird.date).toString()}</li>
-              {bird.notes &&
-                <li className="observations__listItem">{bird.notes.substring(0,30)}</li>
-              }
-              {bird.picture &&
-              <li className="observations__listItem">
-                <img alt={bird.alt || 'no alt given'} src={`data:image/jpg;image/png;base64, ${btoa(bird.picture)}`} />
-              </li>
-              }
-              <li className="observations__listItem"><Link to={`/observation/${bird.id}`}>
-                <button className="observations__button button">Open</button>
-              </Link></li>
-            </ul>
+                {bird.picture &&
+                <li className="observations__listItem">
+                  <img alt={bird.alt || 'no alt given'} src={`data:image/jpg;image/png;base64, ${btoa(bird.picture)}`} />
+                </li>
+                }
+                <li className="observations__listItem"><Link to={`/observation/${bird.id}`}>
+                  <button className="observations__button button">Open</button>
+                </Link></li>
+              </ul>
+            </React.Fragment>
           );
         }
       )}

@@ -20,34 +20,53 @@ const Observation = (props) => {
   };
 
   return (
-    <div className="observation">
+    <div className="main observation">
       {!bird ?
         <h1>No bird by that id was found</h1>
         :
         <>
           <h1>{bird.name}</h1>
-          <ul>
+          <ul className="observation__list">
+            <li className="observation__listItem">
+              <p>Rarity:</p>
+              {bird.rarity}
+            </li>
             <li className="observation__listItem">
               {bird.loc.longitude ?
-                `latitude: ${parseFloat(bird.loc.latitude).toFixed(4)} | longitude:${parseFloat(bird.loc.longitude).toFixed(4)} | accuracy: ${bird.loc.accuracy}m`
+                <>
+                  <p>Location:</p>
+                  {`latitude: ${parseFloat(bird.loc.latitude).toFixed(4)}`}
+                  <br/>
+                  {`longitude: ${parseFloat(bird.loc.longitude).toFixed(4)}`}
+                  <br/>
+                  {`accuracy: ${bird.loc.accuracy}m`}
+                </>
                 :
                 `${bird.loc}`
               }
             </li>
-            <li className="observation__listItem">{new Date(bird.date).toString()}</li>
+            <li className="observation__listItem">
+              <p>Date:</p>
+              {new Date(bird.date).toLocaleString('en-GB', { timeZone: 'Europe/Helsinki' })}
+            </li>
             {bird.notes ?
-              <li className="observation__listItem">{bird.notes}</li>
+              <li className="observation__listItem">
+                <p>Notes:</p>
+                {bird.notes}
+              </li>
               :
-              <li className="observation_listItem">No notes</li>
+              <li className="observation__listItem"><p>No notes</p></li>
             }
             {bird.picture &&
-            <li>
+            <li className="observation__listItem">
               <img alt={bird.alt || 'no alt given'} src={`data:image/jpg;image/png;base64, ${btoa(bird.picture)}`} />
             </li>
             }
           </ul>
-          <button className="button" onClick={handleUpdate}>Update entry</button>
-          <button className="button" onClick={handleDelete}>Delete entry</button>
+          <div className="observation__listItem__buttons">
+            <button className="button" onClick={handleUpdate}>Update entry</button>
+            <button className="button" onClick={handleDelete}>Delete entry</button>
+          </div>
         </>
       }
     </div>

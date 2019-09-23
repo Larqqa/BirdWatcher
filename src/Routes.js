@@ -34,7 +34,7 @@ const routes = [
     path: '/observationform',
     exact: true,
     component: ObservationForm,
-    link: false
+    link: true
   },
   {
     name: 'Update observation',
@@ -54,7 +54,7 @@ const routes = [
 // Make links for use in navBar
 export const NavLinks = () => {
   return (
-    <div id="nav">
+    <div className="nav">
       {routes.map((route, i) =>
         route.link &&
         <Link

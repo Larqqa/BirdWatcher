@@ -23,7 +23,7 @@ ReactDOM.render(
 // Register serviceworker
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('http://192.168.56.1:3000/sw.js').then((registration) => {
+    navigator.serviceWorker.register('/sw.js').then((registration) => {
 
       // Registration was successful
       console.log('ServiceWorker registration successful with scope: ', registration.scope);

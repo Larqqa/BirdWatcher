@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 const About = () => {
   return (
-    <div className="about">
-      <h1>BirdWatcher</h1>
+    <div className="main about">
+      <h1>About BirdWatcher</h1>
       <p>
         This application was build to help track bird watching observations. You can save your obsercations online and offline. New observations can be saved by filling the <Link to="/observationform">observation form</Link>.
       </p>

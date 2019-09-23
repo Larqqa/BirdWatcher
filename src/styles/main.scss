@@ -1,3 +1,197 @@
-body {
-  background: lightgrey;
+/*
+------
+ADD ALL BLOCK & ELEMENT STYLES HERE
+------
+*/
+
+
+/* ----- IMPORTS ----- */
+
+@import 'vars';
+
+/* ----- /IMPORTS ----- */
+
+
+/* ----- ELEMENTS ----- */
+
+h1 {
+  color: color(font, dark);
+  font-family: $heading;
+  margin: 0;
+  margin-bottom: padding();
+}
+
+img {
+  max-width: 100%;
+}
+
+button {
+  @include defaultText();
+  cursor: pointer;
+  padding: padding(small);
+  width: 100%;
+
+  &.button {
+    &--full {
+      width: 100%;
+      margin: padding() 0;
+      padding: padding(small);
+    }
+  }
+}
+
+a {
+  @include defaultText();
+}
+
+p {
+  @include defaultText();
+}
+
+li {
+  @include defaultText();
+}
+
+.main {
+  padding: padding();
+}
+
+hr {
+  border-color: color(font, dark);
+  border-top: none;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  input, select, textarea {
+    @include defaultText();
+    margin: padding() 0;
+    padding: padding(small);
+    &[type=file] {
+      padding: padding(small) 0;
+    }
+  }
+  textarea {
+    resize: vertical;
+  }
+  .button {
+    &--space{
+      margin: padding() 0;
+    }
+  }
+}
+
+/* ----- /ELEMENTS ----- */
+
+/* ----- ROOT -----*/
+
+#root, body {
+  background-color: color(bg);
+}
+
+/* ----- /ROOT -----*/
+
+/* ----- NAV -----*/
+
+.nav {
+  background-color: color(bg, dark);
+  display: flex;
+  padding: padding() 0;
+  justify-content: flex-start;
+  &__item {
+    color: color(font, light);
+    padding: padding(link);
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+/* ----- /NAV -----*/
+
+/* ----- ABOUT -----*/
+
+.about {
+  p {
+    margin-bottom: padding();
+  }
+  a {
+    &:hover {
+       color: color(font, hover);
+    }
+  }
+}
+
+/* ----- /ABOUT -----*/
+
+/* ----- OBSERVATIONS BLOCK -----*/
+
+.observations {
+  &__filter {
+    margin-top: padding();
+    p {
+      margin-bottom: padding(small);
+    }
+  }
+  &__list {
+    padding: 0;
+    &Item {
+      list-style-type: none;
+      margin-bottom: padding();
+      p {
+        font-size: 1.2rem;
+        margin-bottom: padding(small);
+      }
+      &--title {
+        @extend .observations__listItem;
+        p {
+          font-weight: bold;      
+          font-size: 1.5rem;
+          margin-bottom: padding();
+        }
+      }
+    }
+  }
+}
+
+/* ----- /OBSERVATIONS BLOCK -----*/
+
+/* ----- OBSERVATION -----*/
+
+.observation {
+  &__list {
+    @extend .observations__list;
+    &Item {
+      @extend .observations__listItem;
+    }
+  }
+}
+
+/* ----- /OBSERVATION -----*/
+
+/* ----- OBSERVATION FORM -----*/
+
+.observationForm {
+  
+}
+
+/* ----- /OBSERVATION FORM  -----*/
+
+
+@media screen and (min-width: 1000px) {
+  button {
+    max-width: 200px;
+  }
+  .main {
+    margin: auto;
+    max-width: 60%;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .nav__item {
+    font-size: .9rem;
+  }
 }

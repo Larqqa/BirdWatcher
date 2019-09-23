@@ -1,0 +1,65 @@
+/*
+------
+ADD ALL VARIABLES AND MIXINS HERE
+------
+*/
+/* ----- IMPORTS ----- */
+
+@import url('https://fonts.googleapis.com/css?family=Lora|Poppins&display=swap');
+
+/* ----- /IMPORTS ----- */
+
+/* ----- VARIABLES ----- */
+
+$colors: (
+  bg: (
+    base: rgba(213, 245, 227, 1),
+    dark: rgba(25, 111, 61, 0.8),
+  ),
+  font: (
+    base: rgba(10, 61, 98, 1.0),
+    dark: rgba(10, 30, 50, 1),
+    light: rgba(239,248,255,1.0),
+    hover: lighten(rgba(10, 61, 98, 1.0), 50%),
+  ),
+  message: (
+    base: rgba(120, 224, 143,1.0),
+    error: rgba(229, 80, 57,1.0),
+    alert: rgba(246, 185, 59,1.0),
+  ),
+);
+
+@function color($color, $tone: 'base') {
+  @return map-get(map-get($colors, $color), $tone);
+}
+
+$paddings: (
+  base: 1rem,
+  small: .5rem,
+  link: .5rem 1rem,
+  big: 2rem,
+);
+
+@function padding($pad: 'base') {
+  @return map-get($paddings, $pad);
+}
+
+/* ----- /VARIABLES ----- */
+
+/* ----- FONTS ----- */
+
+$paragraph: 'Poppins', sans-serif;
+$heading: 'Lora', serif;
+
+/* ----- /FONTS ----- */
+
+/* ----- MIXINS ----- */
+
+@mixin defaultText {
+  color: color(font, dark);
+  font-family: $paragraph;
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* ----- /MIXINS ----- */
