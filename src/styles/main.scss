@@ -95,8 +95,10 @@ form {
 /* ----- MESSAGEBOX -----*/
 #messageBox {
   position: relative;
+  width: 100%;
   .message {
     @include defaultText();
+    box-sizing: border-box;
     padding: padding();
     width: 100%;
     position: absolute;
@@ -111,6 +113,9 @@ form {
     &.error {
       color: colot(font, light);
       background: color(message, error);
+    }
+    &.test {
+      top: 0;
     }
   }
 }
@@ -137,9 +142,6 @@ header {
     text-decoration: none;
     &:hover {
       text-decoration: underline;
-    }
-    &:first-child {
-      padding-left: 0;
     }
   }
 }
@@ -223,6 +225,12 @@ header {
   .main, .nav, #messageBox {
     margin: auto;
     max-width: 60%;
+  }
+
+  .nav__item {
+    &:first-child {
+      padding-left: 0;
+    }
   }
 }
 
