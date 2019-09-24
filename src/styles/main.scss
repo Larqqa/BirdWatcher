@@ -92,10 +92,41 @@ form {
 
 /* ----- /ROOT -----*/
 
+/* ----- MESSAGEBOX -----*/
+#messageBox {
+  position: relative;
+  .message {
+    @include defaultText();
+    padding: padding();
+    width: 100%;
+    position: absolute;
+    top: -100px;
+    text-align: center;
+    &.success {
+      background: color(message, base);
+    }
+    &.alert {
+      background: color(message, alert);
+    }
+    &.error {
+      background: color(message, error);
+    }
+  }
+}
+
+/* ----- /MESSAGEBOX -----*/
+
+/* ----- HEADER -----*/
+
+header {
+  background-color: color(bg, dark);
+}
+
+/* ----- /HEADER -----*/
+
 /* ----- NAV -----*/
 
 .nav {
-  background-color: color(bg, dark);
   display: flex;
   padding: padding() 0;
   justify-content: flex-start;
@@ -105,6 +136,9 @@ form {
     text-decoration: none;
     &:hover {
       text-decoration: underline;
+    }
+    &:first-child {
+      padding-left: 0;
     }
   }
 }
@@ -179,12 +213,13 @@ form {
 
 /* ----- /OBSERVATION FORM  -----*/
 
+/* ----- BREAKPOINTS  -----*/
 
 @media screen and (min-width: 1000px) {
   button {
     max-width: 200px;
   }
-  .main {
+  .main, .nav, #messageBox {
     margin: auto;
     max-width: 60%;
   }
@@ -195,3 +230,5 @@ form {
     font-size: .9rem;
   }
 }
+
+/* ----- /BREAKPOINTS  -----*/

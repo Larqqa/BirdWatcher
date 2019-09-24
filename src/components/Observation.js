@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { deleteBird } from '../reducers/birdReducer';
 import filters from '../helpers/filters';
+import animate from '../helpers/animations';
 
 const Observation = (props) => {
   const bird = props.bird;
@@ -10,6 +11,7 @@ const Observation = (props) => {
   const handleDelete = () => {
     if (window.confirm('Are you sure you want to delete this entry?')) {
       props.deleteBird(bird.id);
+      animate.message('alert', `${bird.name} was deleted`);
       props.history.push('/');
     }
   };

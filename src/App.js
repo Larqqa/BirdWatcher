@@ -23,6 +23,9 @@ const App = (props) => {
 
   return (
     <>
+      <div id="messageBox">
+        <div className="message error test">This is a message</div>
+      </div>
       <header>
         <NavLinks />
       </header>

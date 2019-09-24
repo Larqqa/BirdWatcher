@@ -9,6 +9,7 @@
     "build": "rm -rf build && webpack --mode=production"
   },
   "dependencies": {
+    "animejs": "^3.1.0",
     "dexie": "^2.0.4",
     "normalize.css": "^8.0.1",
     "react": "^16.8.6",

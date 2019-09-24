@@ -14,6 +14,8 @@ self.addEventListener('install', (event) => {
     caches.open(CACHE)
       .then((cache) => {
 
+
+
         // Add all local resources to cache
         return cache.addAll(URLS);
       })

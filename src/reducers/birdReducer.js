@@ -1,6 +1,7 @@
 const crypto = require('crypto');
 import dbService from '../services/reguests';
 import filters from '../helpers/filters';
+import animate from '../helpers/animations';
 
 const reducer = (state = [], action) => {
   switch (action.type) {
@@ -43,7 +44,7 @@ export const addBird = (data) => {
 
   // Add id from a random hash string
   const id = !data.id ? crypto.randomBytes(24).toString('hex') : data.id;
-
+  
   // Get time & date of creation in milliseconds
   const date = !data.date ? new Date().getTime() : data.date;
 
@@ -60,7 +61,8 @@ export const addBird = (data) => {
         data: newBird
       });
     } catch (er) {
-      // console.log(er);
+      animate.message('error', `Something went wrong: ${er.message}`);
+      console.log(er);
     }
   };
 };
@@ -86,6 +88,7 @@ export const updateSingleBird = (data) => {
         data: updatedBird
       });
     } catch (er) {
+      animate.message('error', `Something went wrong: ${er.message}`);
       console.log(er);
     }
   };
@@ -104,6 +107,7 @@ export const deleteBird = (id) => {
         id,
       });
     } catch (er) {
+      animate.message('error', `Something went wrong: ${er.message}`);
       console.log(er);
     }
   };

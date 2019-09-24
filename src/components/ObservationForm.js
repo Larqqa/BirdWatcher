@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { addBird, updateSingleBird } from '../reducers/birdReducer';
 import filters from '../helpers/filters';
+import animate from '../helpers/animations';
 
 const ObservationForm = (props) => {
   const [ name, setName ] = useState('');
@@ -55,8 +56,8 @@ const ObservationForm = (props) => {
     };
   
     const error = (err) => {
-      alert(err.message);
       console.warn(`ERROR(${err.code}): ${err.message}`);
+      animate.message('error', `Error: ${err.message}`);
     };
   
     navigator.geolocation.getCurrentPosition(success, error, options);
@@ -116,6 +117,7 @@ const ObservationForm = (props) => {
 
         // When updating entries, go to the entry after update
         props.updateSingleBird(res);
+        animate.message('success', `${res.name} was updated`);
         return props.history.push(`/observation/${bird.id}`);
       });
 
@@ -134,6 +136,7 @@ const ObservationForm = (props) => {
 
       // When creating new entries, go to home after saving entry
       props.addBird(res);
+      animate.message('success', `${res.name} was added`);
       return props.history.push('/');
     });
     
@@ -143,7 +146,7 @@ const ObservationForm = (props) => {
   const handleCancel = (e) => {
     e.preventDefault();
 
-    if (window.confirm('Are you sure you want to cancel this bird?')) {
+    if (window.confirm('Are you sure you want to cancel?')) {
 
       // If updating a single bird, return to birds entry
       if (bird) return props.history.push(`/observation/${bird.id}`);
@@ -156,13 +159,13 @@ const ObservationForm = (props) => {
     e.preventDefault();
 
     // Confirm that user wants to overwrite old location
-    if (bird && window.confirm('Are you sure you want to update this observations location?')){
-      setGeoLocation();
-    } else {
-
-      // When creating new entries, get location on button press
-      setGeoLocation();
+    if (bird && !window.confirm('Are you sure you want to update this observations location?')) {
+      return;
     }
+    
+    // When creating new entries, get location on button press
+    setGeoLocation();
+    animate.message('success', 'Location updated');
   };
 
   return (
@@ -196,7 +199,7 @@ const ObservationForm = (props) => {
         </button>
         <p>{!bird || !bird.picture ? 'Add picture' : 'Replace picture'}</p>
         <input type="file" name="picture" aria-label="Add a picture" id="picture" capture />
-        <input type="text" name="alt" aria-label="Add an alternative tag for the picture" value={alt} placeholder="image alt text" onChange={handleChange} />
+        <input type="text" name="alt" aria-label="Add an alternative tag for the picture" value={alt} placeholder="Alternate text for image" onChange={handleChange} />
         <button className="button">Save</button>
         <button className="button" onClick={handleCancel}>Cancel</button>
       </form>
