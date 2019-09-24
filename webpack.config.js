@@ -1,5 +1,6 @@
 const path = require('path');
-const copy = require('copy-webpack-plugin');
+const html = require('html-webpack-plugin');
+const favicons = require('favicons-webpack-plugin');
 
 module.exports = (env, argv) =>  {
   const dev = argv.mode === 'development';
@@ -8,10 +9,7 @@ module.exports = (env, argv) =>  {
     // Map source files for better errors
     devtool: 'source-map',
     entry: {
-      bundle: [
-        '@babel/polyfill',
-        './src/index.js'
-      ],
+      bundle: './src/index.js',
       sw: './src/serviceWorker.js'
     },
     output: {
@@ -60,18 +58,6 @@ module.exports = (env, argv) =>  {
           },
         },
         {
-
-          // Watch html files
-          test: /\.(html)$/,
-          use: {
-            loader: 'html-loader',
-            options: {
-              minimize: true,
-              removeComments: false,
-            }
-          }
-        },
-        {
           test: /\.(css|scss)$/,
           use: [
             require.resolve('style-loader'),
@@ -86,14 +72,24 @@ module.exports = (env, argv) =>  {
       ],
     },
     plugins: [
+      new html({
+        template: './src/public/index.html',
+        hash: true,
+      }),
+      new favicons({
+        logo: './src/public/favicon.png',
+        favicons: {
+          appName: 'BirdWatcher',
+          appDescription: 'Application for bird watchers to record sightings',
+          background: '#000',
+          theme_color: '#000',
+          icons: {
+            coast: false,
+            yandex: false
+          }
+        }
+      }),
 
-      // Copy static html specific files to build folder
-      new copy([
-        {
-          from: './src/public',
-          to: path.join(__dirname, dev ? './devBuild' : './build'),
-        },
-      ]),
-    ],
+    ]
   };
 };

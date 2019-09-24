@@ -109,6 +109,7 @@ form {
       background: color(message, alert);
     }
     &.error {
+      color: colot(font, light);
       background: color(message, error);
     }
   }
