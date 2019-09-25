@@ -92,7 +92,7 @@ export const Observations = (props) => {
                 {bird.notes &&
                   <li className="observations__listItem">
                     <p>Notes:</p>
-                    {bird.notes.substring(0,30)}
+                    {bird.notes.substring(0,30)}{bird.notes.length > 30 && '...'}
                   </li>
                 }
                 {bird.picture &&
