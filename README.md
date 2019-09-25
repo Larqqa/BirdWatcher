@@ -19,6 +19,8 @@ A service worker is used for offline cache handling, so that the app can be run 
 
 The client is built with webpack. Webpack builds the app into bundle.js and the serviceworker into sw.js. Webpack also copies public files, such as index.html, into the build folder. The client bundles are built into production folder called build and development folder called devBuild. The devBuild folder is only used by Webpack Dev Server.
 
+Unit testing is done with Jest using the Enzyme library. The tests are used to test Redux functionality and React component rendering.
+
 ## Installing & running the app
 
 ### Install the app:
