@@ -1,7 +1,7 @@
 const bird = [
   {
     name: 'punatulkku',
-    notes: 'notes here yeet!',
+    notes: 'notes here!',
     rarity: 'common',
     loc: 'aulanko',
     id: 'asfasfsfas',
@@ -9,7 +9,7 @@ const bird = [
   },
   {
     name: 'mustarastas',
-    notes: 'notes here yeet!',
+    notes: 'notes here!',
     rarity: 'rare',
     loc: 'hattula',
     id: 'asdasgashgaahd',
@@ -17,7 +17,7 @@ const bird = [
   },
   {
     name: 'lokki',
-    notes: 'notes here yeet!',
+    notes: 'notes here!',
     rarity: 'extremely rare',
     loc: 'vanajavesi',
     id: 'asfasftsiytkyti',
@@ -25,7 +25,7 @@ const bird = [
   },
   {
     name: 'joutsen',
-    notes: 'notes here yeet!',
+    notes: 'notes here!',
     rarity: 'rare',
     loc: 'aulanko',
     id: 'xctrekxhjhrkyfhadnab',
@@ -33,7 +33,7 @@ const bird = [
   },
   {
     name: 'harakka',
-    notes: 'notes here yeet!',
+    notes: 'notes here!',
     rarity: 'common',
     loc: 'hattula',
     id: 'lkngölksfhdntåroisn',
@@ -41,7 +41,7 @@ const bird = [
   },
   {
     name: 'telkkä',
-    notes: 'notes here yeet!',
+    notes: 'notes here!',
     rarity: 'extremely rare',
     loc: 'vanajavesi',
     id: 'äioganåoeraåviamåorenvub',

@@ -1,21 +1,50 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { render } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import Observation from './Observation';
-import storeInit from '../store';
+import { Observation } from './Observation';
+import Enzyme, { shallow, mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+import initStore from '../store';
+import dummy from '../helpers/dummy';
+import filters from '../helpers/filters';
+import db from '../services/DB';
 
-const store = storeInit();
+Enzyme.configure({ adapter: new Adapter() });
 
-test('renders content', () => {
+describe('Observation tests', () => {
+  test('Component renders error message with wrong id', () => {
+    const wrapper = mount(
+      <Observation
+        store={initStore()}
+      />
+    );
+    
+    // Component is founc
+    expect(wrapper.find(Observation)
+      .exists())
+      .toEqual(true);
 
-  const component = render(
-    <Provider store={ store }>
-      <Observation match={{ params: { id:  null } }} />
-    </Provider>
-  );
+    // Component renders static element
+    expect(wrapper.find(Observation)
+      .find('h1').text())
+      .toEqual('No bird by that id was found');
+  });
 
-  expect(component.container).toHaveTextContent(
-    'No bird by that id'
-  );
+  test('Component renders data', () => {
+    const wrapper = mount(
+      <Observation
+        store={initStore()}
+        bird={dummy[0]}
+      />
+    );
+    
+    // Component is found
+    expect(wrapper.find(Observation)
+      .exists())
+      .toEqual(true);
+
+    // Component renders title
+    expect(wrapper.find(Observation)
+      .find('h1').text())
+      .toEqual(dummy[0].name);
+  });
 });

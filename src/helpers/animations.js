@@ -2,6 +2,10 @@ import anime from 'animejs';
 
 const animate = {
   message: (handler, mes) => {
+    /* ----- Animation for messages ----- */
+
+    // Dont send messages if testing 
+    if (process.env.NODE_ENV ===  'test') return;
 
     // Create message
     const message = document.createElement('div');

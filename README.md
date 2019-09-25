@@ -30,7 +30,7 @@ npm install
 ```
 npm start
 ```
-The development build is also built before the Webpack Dev Server is started.
+The development build is also built before the Webpack Dev Server is started
 
 ### Building the production build:
 ```
@@ -42,3 +42,14 @@ npm run build
 npm run serve
 ```
 The production build is also built before serving the files
+
+### Running tests:
+```
+npm test
+```
+This runs all the tests once
+
+```
+npm run test:watch
+```
+This runs all the tests until stopped. This is useful for developing new tests or features

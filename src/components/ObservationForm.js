@@ -4,7 +4,7 @@ import { addBird, updateSingleBird } from '../reducers/birdReducer';
 import filters from '../helpers/filters';
 import animate from '../helpers/animations';
 
-const ObservationForm = (props) => {
+export const ObservationForm = (props) => {
   const [ name, setName ] = useState('');
   const [ rarity, setRarity ] = useState('');
   const [ notes, setNotes ] = useState('');
@@ -13,7 +13,7 @@ const ObservationForm = (props) => {
   const [ picture, setPicture ] = useState();
 
   const bird = props.bird;
-
+  
   // Init form values, if prop was found
   useEffect(() => {
     
@@ -170,7 +170,10 @@ const ObservationForm = (props) => {
 
   return (
     <div className="main observationForm">
-      <h1>{!bird ? 'Make new entry' : `update ${bird.name}`}</h1>
+      <h1>{!bird ? 'Make new entry' : `Update ${bird.name}`}</h1>
+      {props.params && !bird &&
+        <p id="wrongId">No entry by that id, you can still add new one!</p>
+      }
       <form onSubmit={handleSubmit}>
         <input type="text" name="name" aria-label="Add name of the bird" value={name} placeholder="Name" onChange={handleChange} required/>
         <select name="rarity" aria-label="Select rarity" value={rarity} onChange={handleChange}>
@@ -209,7 +212,8 @@ const ObservationForm = (props) => {
 
 const mapStateToProps = (state, props) => {
   return {
-    bird: filters.filterBird(state.birds, props.match.params.id)
+    bird: filters.filterBird(state.birds, props.match.params.id),
+    params: props.match.params.id
   };
 };
 

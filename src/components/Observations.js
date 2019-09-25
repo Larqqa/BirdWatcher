@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { updateBirds } from '../reducers/birdReducer';
 import filters from '../helpers/filters';
 
-const Observations = (props) => {
+export const Observations = (props) => {
   const birds = props.birds;
   
   const handleSort = (filter) => {

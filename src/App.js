@@ -4,16 +4,19 @@ import Routes, { NavLinks } from './Routes';
 import { initializeBirds, addBird } from './reducers/birdReducer';
 import dummy from './helpers/dummy';
 
-const App = (props) => {
+export const App = (props) => {
 
   // Initialize local data
   useEffect(() => {
     const init = async () => {
 
-      // Add dummy data
-      await dummy.map(bird => {
-        props.addBird(bird);
-      });
+      if (process.env.NODE_ENV === 'development') {
+        
+        // Add dummy data
+        await dummy.map(bird => {
+          props.addBird(bird);
+        });
+      }
 
       props.initializeBirds();
     };

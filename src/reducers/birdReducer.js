@@ -42,6 +42,8 @@ export const initializeBirds = () => {
 // Add new entry
 export const addBird = (data) => {
 
+  // id and date will be set from ./helpers/dummy so the if clause is needed
+
   // Add id from a random hash string
   const id = !data.id ? crypto.randomBytes(24).toString('hex') : data.id;
   

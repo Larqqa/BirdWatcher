@@ -5,7 +5,8 @@ const dbService = {
   // POST: new entry
   addEntry: async (obj) => {
     await db.entries.add(obj);
-    console.log(`${obj.name} added`);
+    
+    if (process.env.NODE_ENV !==  'test') console.log(`${obj.name} added`);
   },
 
   // GET: single entry by query & value

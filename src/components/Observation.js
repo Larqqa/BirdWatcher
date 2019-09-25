@@ -4,7 +4,7 @@ import { deleteBird } from '../reducers/birdReducer';
 import filters from '../helpers/filters';
 import animate from '../helpers/animations';
 
-const Observation = (props) => {
+export const Observation = (props) => {
   const bird = props.bird;
 
   // Delete enrty & go to home

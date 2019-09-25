@@ -1,21 +1,58 @@
 import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { render } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import ObservationForm from './ObservationForm';
-import storeInit from '../store';
+import { ObservationForm } from './ObservationForm';
+import Enzyme, { shallow, mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+import dummy from '../helpers/dummy';
+import { BrowserRouter as Router } from 'react-router-dom';
+import initStore from '../store';
 
-const store = storeInit();
+Enzyme.configure({ adapter: new Adapter() });
 
-test('renders content', () => {
+describe('Observations form tests', () => {
 
-  const component = render(
-    <Provider store={ store }>
-      <ObservationForm match={{ params: { id: null } }}/>
-    </Provider>
-  );
+  test('renders empty form', () => {
+    const wrapper = mount(
+    <Router>
+      <ObservationForm
+        store={initStore()}
+      />
+    </ Router>
+    );
 
-  expect(component.container).toHaveTextContent(
-    'Make new entry'
-  );
+    // Component is found
+    expect(wrapper.find(ObservationForm)
+      .exists())
+      .toEqual(true);
+
+    // Component renders static element
+    expect(wrapper.find(ObservationForm)
+      .find('h1').text())
+      .toEqual('Make new entry');
+    
+    expect(wrapper.find(ObservationForm)
+    .find('input').first().text())
+    .toEqual('');
+  });
+
+  test('renders error for wrong id', () => {
+    const wrapper = mount(
+    <Router>
+      <ObservationForm
+        store={initStore()}
+        params={'notid'}
+      />
+    </ Router>
+    );
+
+    // Component is found
+    expect(wrapper.find(ObservationForm)
+      .exists())
+      .toEqual(true);
+
+    // Component renders static element
+    expect(wrapper.find(ObservationForm)
+      .find('#wrongId').exists())
+      .toEqual(true);
+  });
 });
